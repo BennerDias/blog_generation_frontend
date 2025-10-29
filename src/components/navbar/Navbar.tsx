@@ -23,9 +23,9 @@ function Navbar() {
             <span className='hover:text-gray-300 cursor-pointer'>
               Postagens
             </span>
-            <span>Temas</span>
+            <span><Link to='/temas' className="hover:underline">Temas</Link></span>
             <span>
-              <Link to='/cadastro'>Cadastrar tema</Link>
+              <Link to='/cadastrartema' className="hover:underline">Cadastrar tema</Link>
             </span>
             <span>Perfil</span>
             <span><Link to='' onClick={logout} className="hover:underline">Sair</Link></span>
