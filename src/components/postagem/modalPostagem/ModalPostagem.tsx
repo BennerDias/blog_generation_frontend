@@ -16,14 +16,25 @@ function ModalPostagem() {
   const { id } = useParams<{ id: string }>();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [temas, setTemas] = useState<Tema[]>([]);
-  const [tema, setTema] = useState<Tema>({} as Tema);
-  const [postagem, setPostagem] = useState<Postagem>({} as Postagem);
+  const [temaSelecionado, setTemaSelecionado] = useState<Tema | null>(null);
 
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [usuarioSelecionado, setUsuarioSelecionado] = useState<Usuario | null>(null);
 
-  async function buscarTema() {
+  const [postagem, setPostagem] = useState<Postagem>({
+    id: 0,
+    titulo: "",
+    texto: "",
+    data: "",
+    tema: {} as Tema,
+    usuario: {} as Usuario,
+  });
+
+  // -------- BUSCAS -------- //
+
+  async function buscarTemas() {
     try {
       await buscar("/temas", setTemas, {
         headers: { Authorization: token },
@@ -45,23 +56,19 @@ function ModalPostagem() {
 
   async function buscarPostagemPorId(id: string) {
     try {
-      await buscar(`/postagens/${id}`, setPostagem, {
+      const resposta = await buscar(`/postagens/${id}`, setPostagem, {
         headers: { Authorization: token },
       });
+
+      // Quando editar, preencher selects
+      setUsuarioSelecionado(resposta.usuario);
+      setTemaSelecionado(resposta.tema);
     } catch (error: any) {
       if (error.toString().includes("401")) handleLogout();
     }
   }
 
-  async function buscarTemaPorId(id: string) {
-    try {
-      await buscar(`/temas/${id}`, setTemas, {
-        headers: { Authorization: token },
-      });
-    } catch (error: any) {
-      if (error.toString().includes("401")) handleLogout();
-    }
-  }
+  // -------- VERIFICA LOGIN -------- //
 
   useEffect(() => {
     if (token === "") {
@@ -70,49 +77,50 @@ function ModalPostagem() {
     }
   }, [token]);
 
+  // -------- BUSCAR DADOS INICIAIS -------- //
+
   useEffect(() => {
-    buscarTema();
-    buscarUsuarios(); 
+    buscarTemas();
+    buscarUsuarios();
 
     if (id !== undefined) {
       buscarPostagemPorId(id);
     }
   }, [id]);
 
-  useEffect(() => {
-    setPostagem({
-      ...postagem,
-      tema: tema,
-    });
-  }, [tema]);
+  // -------- ATUALIZAR INPUTS -------- //
 
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setPostagem({
       ...postagem,
       [e.target.name]: e.target.value,
-      tema: tema,
-      usuario: usuarioSelecionado, 
+      tema: temaSelecionado!,
+      usuario: usuarioSelecionado!,
     });
   }
 
-  function retornar() {
-    navigate("/postagens");
-  }
+  // -------- ENVIAR FORMULÁRIO -------- //
 
   async function gerarNovaPostagem(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
 
     if (!usuarioSelecionado) {
-      ToastAlerta("Selecione o usuário contratante", "info");
+      ToastAlerta("Selecione o usuário autor", "info");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!temaSelecionado) {
+      ToastAlerta("Selecione um tema", "info");
       setIsLoading(false);
       return;
     }
 
     const payload: Postagem = {
       ...postagem,
-      tema: tema,
-      usuario: usuarioSelecionado, 
+      usuario: usuarioSelecionado,
+      tema: temaSelecionado,
     };
 
     try {
@@ -120,53 +128,51 @@ function ModalPostagem() {
         await atualizar(`/postagens`, payload, setPostagem, {
           headers: { Authorization: token },
         });
-        ToastAlerta("Serviço atualizado com sucesso", "sucesso");
+        ToastAlerta("Postagem atualizada com sucesso", "sucesso");
       } else {
         await cadastrar(`/postagens`, payload, setPostagem, {
           headers: { Authorization: token },
         });
-        ToastAlerta("Serviço cadastrado com sucesso", "sucesso");
+        ToastAlerta("Postagem cadastrada com sucesso", "sucesso");
       }
+
+      navigate("/");
     } catch (error: any) {
       if (error.toString().includes("401")) {
         handleLogout();
-        ToastAlerta("Faça login para continuar!", "info");
+        ToastAlerta("Faça login novamente!", "info");
       } else {
-        ToastAlerta("Erro ao salvar o serviço", "erro");
+        ToastAlerta("Erro ao salvar a postagem", "erro");
       }
     }
-    console.log(postagem)
+
     setIsLoading(false);
-    retornar();
   }
 
-  const carregandoCategoria = tema.descricao === "";
-
   return (
-      <div className="flex flex-col text-white items-center py-20 px-6 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center filter grayscale">
+    <div className="flex flex-col text-white items-center py-20 px-6 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center filter grayscale">
       <h1 className="text-4xl font-bold mb-6 text-black">
-        {id !== undefined ? "Editar Postagem" : "Realizar nova Postagem"}
+        {id ? "Editar Postagem" : "Criar nova Postagem"}
       </h1>
 
       <form
-        className="bg-slate-800/60 rounded-2xl mb-15 shadow-lg p-8 w-full max-w-md flex flex-col mt-5 gap-6 border border-slate-700"
+        className="bg-slate-800/60 rounded-2xl shadow-lg p-8 w-full max-w-md flex flex-col gap-6 border border-slate-700"
         onSubmit={gerarNovaPostagem}
       >
+        {/* Usuário */}
         <div className="flex flex-col gap-2">
-          <label className="block mb-2 text-sm font-semibold">
-            Usuário contratante
-          </label>
+          <label className="block text-sm font-semibold">Usuário</label>
           <select
             required
-            className="w-full p-3 rounded-lg bg-slate-900 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
-            onChange={(e) => {
-              const usuarioSelecionado = usuarios.find(
-                (u) => u.id === Number(e.target.value)
-              );
-              setUsuarioSelecionado(usuarioSelecionado || null);
-            }}
+            className="w-full p-3 rounded-lg bg-slate-900 border border-slate-600 focus:ring-2 focus:ring-orange-400"
+            value={usuarioSelecionado?.id || ""}
+            onChange={(e) =>
+              setUsuarioSelecionado(
+                usuarios.find((u) => u.id === Number(e.target.value)) || null
+              )
+            }
           >
-            <option  value="">Selecione o usuário...</option>
+            <option value="">Selecione...</option>
             {usuarios.map((u) => (
               <option key={u.id} value={u.id}>
                 {u.nome} ({u.usuario})
@@ -175,80 +181,85 @@ function ModalPostagem() {
           </select>
         </div>
 
+        {/* Título */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-semibold">Titulo</label>
+          <label className="text-sm font-semibold">Título</label>
           <input
             type="text"
             name="titulo"
             required
-            placeholder="Ex: JavaScript"
-            className="w-full p-3 rounded-lg bg-slate-900 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
-            value={postagem.titulo || ""}
+            placeholder="Digite o título"
+            className="w-full p-3 rounded-lg bg-slate-900 border border-slate-600 focus:ring-2 focus:ring-orange-400"
+            value={postagem.titulo}
             onChange={atualizarEstado}
           />
         </div>
 
+        {/* Texto */}
         <div className="flex flex-col gap-2">
           <label className="text-sm font-semibold">Texto</label>
           <input
             type="text"
-            placeholder="Apresente suas ideias"
             name="texto"
             required
-            className="w-full p-3 rounded-lg bg-slate-900 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
-            value={postagem.texto || ""}
+            placeholder="Digite o conteúdo"
+            className="w-full p-3 rounded-lg bg-slate-900 border border-slate-600 focus:ring-2 focus:ring-orange-400"
+            value={postagem.texto}
             onChange={atualizarEstado}
           />
         </div>
 
-
+        {/* Data */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-semibold">Data da Postagem</label>
+          <label className="text-sm font-semibold">Data</label>
           <input
             type="date"
-            name="dt_matricula"
-            className="w-full p-3 rounded-lg bg-slate-900 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            name="data"
+            className="w-full p-3 rounded-lg bg-slate-900 border border-slate-600 focus:ring-2 focus:ring-orange-400"
             value={
-              postagem.data
-                ? new Date(postagem.data).toISOString().split("T")[0]
-                : ""
+              postagem.data ? new Date(postagem.data).toISOString().split("T")[0] : ""
             }
             onChange={atualizarEstado}
           />
         </div>
 
-        
+        {/* Tema */}
         <div className="flex flex-col gap-2">
           <label className="text-sm font-semibold">Tema</label>
           <select
-            name="categoria"
-            className="border p-3 border-slate-800 rounded bg-slate-900 focus:ring-2 focus:ring-orange-400"
-            onChange={(e) => buscarTemaPorId(e.currentTarget.value)}
+            required
+            className="w-full p-3 rounded-lg bg-slate-900 border border-slate-600 focus:ring-2 focus:ring-orange-400"
+            value={temaSelecionado?.id || ""}
+            onChange={(e) =>
+              setTemaSelecionado(
+                temas.find((t) => t.id === Number(e.target.value)) || null
+              )
+            }
           >
-            <option value="" selected disabled>
-              Selecione um Tema
-            </option>
-            {temas.map((tema) => (
-              <option key={tema.id} value={tema.id}>
-                {tema.descricao}
+            <option value="">Selecione...</option>
+            {temas.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.descricao}
               </option>
             ))}
           </select>
         </div>
 
+        {/* Botão */}
         <button
           type="submit"
           className="mt-4 w-full px-6 py-3 rounded-lg bg-[var(--celadon)] hover:bg-[var(--ferngreen)] transition font-semibold text-black text-lg shadow-md"
-          disabled={carregandoCategoria || isLoading}
         >
           {isLoading ? (
             <ClipLoader color="#ffffff" size={24} />
+          ) : id ? (
+            "Atualizar"
           ) : (
-            <span>{id === undefined ? "Cadastrar" : "Atualizar"}</span>
+            "Cadastrar"
           )}
         </button>
       </form>
-      </div>
+    </div>
   );
 }
 

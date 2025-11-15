@@ -46,7 +46,6 @@ function ListaPostagens() {
 
   return (
     <div className="relative min-h-screen text-white overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center filter grayscale"></div>
 
       <div className="relative z-10 flex flex-col items-center pt-10">
         {isLoading && (
@@ -63,14 +62,14 @@ function ListaPostagens() {
 
         <div className="flex justify-end w-full max-w-6xl mb-10">
           <Link to="/cadastrarpostagem">
-            <button className="px-6 py-2 rounded-lg bg-orange-500 hover:bg-orange-900 transition font-semibold text-sm text-white shadow-md">
+            <button className="px-6 py-2 rounded-lg bg-(--mustard) hover:bg-orange-400 transition font-semibold text-sm text-white shadow-md">
               Criar Nova postagem
             </button>
           </Link>
         </div>
 
         <div className="flex justify-center w-full mb-10">
-          <div className="grid place-items-center gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid place-items-center gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {postagens.map((postagem) => (
               <CardPostagem key={postagem.id} postagem={postagem} />
             ))}

@@ -14,7 +14,7 @@ function Home() {
               Dev Blog
             </h2>
             <p className="text-md">
-              Olá, {usuario.nome} expresse aqui seus pensamentos!
+              Olá, {usuario.nome}, expresse aqui seus pensamentos!
             </p>
           </div>
         </div>
