@@ -2,3 +2,11 @@
 * {
   font-family: "Montserrat", sans-serif;
 }
+
+:root {
+    --black: #000000;
+    --mustard: #FFAA00;
+    --blood: #990000;
+    --darkgray: #333333;
+    --gray: #b2b1b1;
+}

@@ -5,7 +5,6 @@ import {
   type ChangeEvent,
   type FormEvent
 } from "react";
-import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import type UsuarioLogin from "../../models/UsuarioLogin";
@@ -13,7 +12,7 @@ import type UsuarioLogin from "../../models/UsuarioLogin";
 function Login() {
   const navigate = useNavigate();
 
-  const { usuario, handleLogin, isLoading } = useContext(AuthContext);
+  const { usuario, handleLogin } = useContext(AuthContext);
 
   const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>(
     {} as UsuarioLogin
@@ -39,31 +38,26 @@ function Login() {
 
   return (
     <>
-      <div className="flex h-screen place-items-center justify-center font-bold 
-      bg-[url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvcHgxMTQwOTQ1LWltYWdlLWt3eXI0NGZzLWt3eXRhaGRtLmpwZw.jpg')]
-      bg-cover bg-center">
-        <div className="flex items-center justify-center bg-black/60 backdrop-blur-md shadow-[0_0_40px_rgba(255,255,255,0.08)] py-8 w-1/3 rounded-2xl">
-          <form
-            className='flex justify-center items-center flex-col gap-4'
-            onSubmit={login}
-          >
-            <h2 className='text-slate-900 text-5xl font-light lowercase'>Welcome back!</h2>
-            <div className='flex flex-col w-full'>
-              <label htmlFor='usuario'>Usuário</label>
+           <div className="flex items-center justify-center bg-[url('https://i.pinimg.com/originals/5a/21/e4/5a21e461bdd743da75452220b91527d4.gif')] bg-cover bg-center bg-no-repeat relative isolate min-h-screen ">
+        <div className='flex flex-col bg-transparent shadow-[0_0_40px_rgba(0,0,0,0.8)] rounded-3xl text-white w-96 h-120 justify-center items-center backdrop-blur-sm'>
+          <div className="w-1/3 h-1/3">
+            <img src="https://avatars.githubusercontent.com/u/183029242?v=4" alt={usuario.nome} className="rounded-full" />
+          </div>
+          <form className="flex flex-col" onSubmit={login}>
+            <div className="flex justify-items-center p-5 gap-5">
               <input
                 type='text'
                 id='usuario'
                 name='usuario'
+                required={true}
                 value={usuarioLogin.usuario}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  atualizarEstado(e)
-                }
-                placeholder='Usuário'
-                className='border-2 border-slate-700 rounded p-2'
+                  atualizarEstado(e)}
+                placeholder='Insira seu email'
+                className="border-b w-60 rounded-md pl-2"
               />
             </div>
-            <div className='flex flex-col w-full'>
-              <label htmlFor='senha'>Senha</label>
+            <div className="flex justify-items-center p-5 gap-5">
               <input
                 type='password'
                 id='senha'
@@ -72,27 +66,20 @@ function Login() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   atualizarEstado(e)
                 }
-                placeholder='Senha'
-                className='border-2 border-slate-700 rounded p-2'
+                className="border-b w-60 rounded-md pl-2"
+                placeholder='Insira sua senha'
               />
             </div>
-            <button
-              type='submit'
-              className='rounded bg-indigo-400 flex justify-center hover:bg-indigo-900 text-white w-1/2 py-2'
-            >
-              {isLoading ? (
-                <ClipLoader color='#ffffff' size={24} />
-              ) : (
-                <span>Entrar</span>
-              )}
+            <button type="submit" className="w-full bg-[var(--mustard)] hover:bg-yellow-600 text-white font-semibold text-xl py-4 
+            rounded-xl transition duration-200 shadow-lg shadow-yellow-500/20">
+              Entrar
             </button>
-            <hr className='border-slate-800 w-full' />
-            <p>
-              Ainda não tem uma conta?{" "}
-              <Link to='/cadastro' className='text-indigo-800 hover:underline'>
-                Cadastre-se
+            <div className="py-4">
+                <p>Ainda não tem conta? cadastre - se</p>
+                <Link to='/cadastro'>
+                  <span className="flex justify-center text-(--mustard) font-semibold text-md hover:text-2xl hover:scale-50 hover:underline cursor-pointer transition-all duration-300 hover:scale-105 transition-all duration-300">Aqui</span>
               </Link>
-            </p>
+            </div>
           </form>
         </div>
       </div>
