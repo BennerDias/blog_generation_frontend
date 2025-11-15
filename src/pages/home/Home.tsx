@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import ListaPostagens from "../../components/postagem/listaPostagens/ListaPostagens";
 
 function Home() {
   const { usuario } = useContext(AuthContext);
@@ -18,6 +19,7 @@ function Home() {
           </div>
         </div>
       </div>
+          <ListaPostagens/>
     </>
   );
 }
