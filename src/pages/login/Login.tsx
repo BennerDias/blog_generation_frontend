@@ -39,17 +39,25 @@ function Login() {
 
   return (
     <>
-      <div className="flex h-screen place-items-center justify-center font-bold 
-      bg-[url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvcHgxMTQwOTQ1LWltYWdlLWt3eXI0NGZzLWt3eXRhaGRtLmpwZw.jpg')]
-      bg-cover bg-center">
-        <div className="flex items-center justify-center bg-black/60 backdrop-blur-md shadow-[0_0_40px_rgba(255,255,255,0.08)] py-8 w-1/3 rounded-2xl">
+      <div
+        className='flex flex-col h-screen place-items-center justify-center font-bold 
+      bg-[var(--PitchBlack)] text-(--Celadon)'
+      >
+        <div className='w-full text-center my-8'>
+          <h2 className='text-4xl font-Bold'>Bem-vindo de volta</h2>
+          <p className='font-light'>Entre na sua conta para continuar</p>
+        </div>
+        <div className='flex flex-col items-center justify-around backdrop-blur-md shadow-[0_0_40px_rgba(255,255,255,0.08)] py-8 w-96 lg:w-120 min-h-130 rounded-2xl'>
+          <div className='w-full text-center'>
+            <h2 className='text-4xl font-bold'>Login</h2>
+            <p className='font-light'>Digite suas credenciais para acessar</p>
+          </div>
           <form
-            className='flex justify-center items-center flex-col gap-4'
+            className='flex justify-center items-center flex-col gap-5'
             onSubmit={login}
           >
-            <h2 className='text-slate-900 text-5xl font-light lowercase'>Welcome back!</h2>
             <div className='flex flex-col w-full'>
-              <label htmlFor='usuario'>Usuário</label>
+              <label htmlFor='usuario'></label>
               <input
                 type='text'
                 id='usuario'
@@ -59,11 +67,11 @@ function Login() {
                   atualizarEstado(e)
                 }
                 placeholder='Usuário'
-                className='border-2 border-slate-700 rounded p-2'
+                className='border-b border-green-200 rounded-xl p-2'
               />
             </div>
             <div className='flex flex-col w-full'>
-              <label htmlFor='senha'>Senha</label>
+              <label htmlFor='senha'></label>
               <input
                 type='password'
                 id='senha'
@@ -72,13 +80,13 @@ function Login() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   atualizarEstado(e)
                 }
-                placeholder='Senha'
-                className='border-2 border-slate-700 rounded p-2'
+                placeholder='Password'
+                className='border-b border-green-200 rounded-xl p-2'
               />
             </div>
             <button
               type='submit'
-              className='rounded bg-indigo-400 flex justify-center hover:bg-indigo-900 text-white w-1/2 py-2'
+              className='rounded bg-(--CanaryYellow) flex justify-center hover:bg-yellow-400 text-black w-1/2 py-2'
             >
               {isLoading ? (
                 <ClipLoader color='#ffffff' size={24} />
@@ -86,10 +94,13 @@ function Login() {
                 <span>Entrar</span>
               )}
             </button>
-            <hr className='border-slate-800 w-full' />
+            <hr className='border-green-200 w-full' />
             <p>
               Ainda não tem uma conta?{" "}
-              <Link to='/cadastro' className='text-indigo-800 hover:underline'>
+              <Link
+                to='/cadastro'
+                className='text-(--CanaryYellow) hover:underline'
+              >
                 Cadastre-se
               </Link>
             </p>

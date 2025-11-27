@@ -8,11 +8,13 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ListaTemas from "./components/tema/listaTemas/ListaTemas";
 import FormTema from "./components/tema/formTema/FormTema";
 import DeletarTema from "./components/tema/deletarTema/DeletarTema";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
       <AuthProvider>
+        <ToastContainer/>
         <BrowserRouter>
           <Navbar />
           <div className='min-h-[80vh]'>

@@ -66,111 +66,113 @@ function Cadastro() {
 
   return (
     <>
-      <div className='grid grid-cols-1 lg:grid-cols-2 h-screen place-items-center font-bold'>
-        <div className="bg-[url('https://i.imgur.com/ZZFAmzo.jpg')] lg:block hidden bg-no-repeat w-full min-h-screen bg-cover bg-center"></div>
+      <div className='grid grid-cols-1 lg:grid-cols-2 h-screen place-items-center font-bold bg-(--PitchBlack) text-(--Celadon)'>
+        <div className="bg-[url('https://ticoopbrasil.coop.br/wp-content/uploads/2024/10/O-Que-E-Programacao.jpg.webp')] lg:block hidden bg-no-repeat w-full min-h-screen bg-cover "></div>
+        
 
-        <form
-          className='flex justify-center items-center flex-col w-2/3 gap-3'
-          onSubmit={cadastrarNovoUsuario}
-        >
-          <h2 className='text-slate-900 text-5xl'>Cadastrar</h2>
-
-          <div className='flex flex-col w-full'>
-            <label htmlFor='nome'>Nome</label>
-            <input
-              type='text'
-              id='nome'
-              name='nome'
-              placeholder='Nome'
-              value={usuario.nome}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                atualizarEstado(e)
-              }
-              className='border-2 border-slate-700 rounded p-2'
-            />
-          </div>
-
-          <div className='flex flex-col w-full'>
-            <label htmlFor='usuario'>Usuário</label>
-            <input
-              type='text'
-              id='usuario'
-              name='usuario'
-              placeholder='Usuário'
-              value={usuario.usuario}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                atualizarEstado(e)
-              }
-              className='border-2 border-slate-700 rounded p-2'
-            />
-          </div>
-
-          <div className='flex flex-col w-full'>
-            <label htmlFor='foto'>Foto</label>
-            <input
-              type='text'
-              id='foto'
-              name='foto'
-              placeholder='Foto'
-              value={usuario.foto}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                atualizarEstado(e)
-              }
-              className='border-2 border-slate-700 rounded p-2'
-            />
-          </div>
-
-          <div className='flex flex-col w-full'>
-            <label htmlFor='senha'>Senha</label>
-            <input
-              type='password'
-              id='senha'
-              name='senha'
-              placeholder='Senha'
-              value={usuario.senha}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                atualizarEstado(e)
-              }
-              className='border-2 border-slate-700 rounded p-2'
-            />
-          </div>
-
-          <div className='flex flex-col w-full'>
-            <label htmlFor='confirmarSenha'>Confirmar Senha</label>
-            <input
-              type='password'
-              id='confirmarSenha'
-              name='confirmarSenha'
-              placeholder='Confirmar Senha'
-              value={confirmarSenha}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                handleConfirmarSenha(e)
-              }
-              className='border-2 border-slate-700 rounded p-2'
-            />
-          </div>
-
-          <div className='flex justify-around w-full gap-8'>
-            <button
-              type='reset'
-              className='rounded text-white bg-red-400 hover:bg-red-700 w-1/2 py-2'
-              onClick={retornar}
-            >
-              Cancelar
-            </button>
-
-            <button
-              type='submit'
-              className='rounded text-white bg-indigo-400 hover:bg-indigo-900 w-1/2 py-2 flex justify-center'
-            >
-              {isLoading ? (
-                <ClipLoader color='#ffffff' size={24} />
-              ) : (
-                <span>Cadastrar</span>
-              )}
-            </button>
-          </div>
-        </form>
+        <div className='flex flex-col items-center justify-around backdrop-blur-md shadow-[0_0_40px_rgba(255,255,255,0.08)] py-8 w-96 lg:w-120 min-h-130 rounded-2xl'>
+          <form
+            className='flex justify-center items-center flex-col w-full gap-3 font-light p-10'
+            onSubmit={cadastrarNovoUsuario}
+          >
+            <h2 className='text-5xl font-bold'>Cadastro</h2>
+            <p>Preencha todos os dados para criar sua conta</p>
+            <div className='flex flex-col w-full '>
+              <label htmlFor='nome'>Nome</label>
+              <input
+                type='text'
+                id='nome'
+                name='nome'
+                placeholder='Seu nome'
+                value={usuario.nome}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  atualizarEstado(e)
+                }
+                className='border border-(--DustyOlive) rounded-md p-2'
+              />
+            </div>
+            <div className='flex flex-col w-full'>
+              <label htmlFor='usuario'>Email</label>
+              <input
+                type='text'
+                id='usuario'
+                name='usuario'
+                placeholder='seu@email.com'
+                value={usuario.usuario}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  atualizarEstado(e)
+                }
+                className='border border-(--DustyOlive) rounded-md p-2'
+              />
+            </div>
+            <div className='flex flex-col w-full'>
+              <label htmlFor='foto'>Foto</label>
+              <input
+                type='text'
+                id='foto'
+                name='foto'
+                placeholder='Link da sua foto'
+                value={usuario.foto}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  atualizarEstado(e)
+                }
+                className='border border-(--DustyOlive) rounded-md p-2'
+              />
+            </div>
+            <div className='flex flex-col w-full'>
+              <label htmlFor='senha'>Senha</label>
+              <input
+                type='password'
+                id='senha'
+                name='senha'
+                placeholder='******'
+                value={usuario.senha}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  atualizarEstado(e)
+                }
+                className='border border-(--DustyOlive) rounded-md p-2'
+              />
+            </div>
+            <div className='flex flex-col w-full'>
+              <label htmlFor='confirmarSenha'>Confirmar Senha</label>
+              <input
+                type='password'
+                id='confirmarSenha'
+                name='confirmarSenha'
+                placeholder='******'
+                value={confirmarSenha}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleConfirmarSenha(e)
+                }
+                className='border border-(--DustyOlive) rounded-md p-2'
+              />
+            </div>
+            <div className='flex justify-around w-full gap-8'>
+              <button
+                type='submit'
+                className='rounded bg-(--CanaryYellow) flex justify-center hover:bg-yellow-400 text-black w-full py-2 my-3'
+              >
+                {isLoading ? (
+                  <ClipLoader color='#ffffff' size={24} />
+                ) : (
+                  <span>Criar conta</span>
+                )}
+              </button>
+            </div>
+            <div className='flex w-full font-light text-center justify-center'>
+              <p>
+                Já tem uma conta?{" "}
+                <button
+                  type='reset'
+                  onClick={retornar}
+                  className=' text-(--CanaryYellow)  hover:underline'
+                >
+                  Faça login
+                </button>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
