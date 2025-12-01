@@ -177,6 +177,20 @@ function FormPostagem() {
               className='border-2 border-slate-700 rounded p-2'
             />
           </div>
+          <div className='flex flex-col gap-2'>
+            <label htmlFor='texto'>Imagem da postagem</label>
+            <input
+              type='text'
+              placeholder='Imagem'
+              name='foto_postagem'
+              value={postagem.foto_postagem}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                atualizarEstado(e)
+              }
+              required
+              className='border-2 border-slate-700 rounded p-2'
+            />
+          </div>
 
           <div className='flex flex-col gap-2'>
             <p>Tema da Postagem</p>

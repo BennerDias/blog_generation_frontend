@@ -11,9 +11,9 @@ function ListaPostagens() {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [postagens, setPostagens] = useState<Postagem[]>([]);
-
   const { usuario, handleLogout } = useContext(AuthContext);
+
+  const [postagens, setPostagens] = useState<Postagem[]>([]);
   const token = usuario.token;
 
   useEffect(() => {

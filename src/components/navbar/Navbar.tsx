@@ -35,21 +35,21 @@ function Navbar() {
   if (usuario.token !== "") {
     component = (
       <>
-      <div className='w-full h-20 flex justify-center py-4 bg-(--PitchBlack) text-(--Celadon) '>
+      <div className='w-full h-20 flex justify-center py-4 bg-transparent text-(--Celadon)'>
         <div className='container flex justify-between items-center text-xl '>
           <Link
             to='/'
-            className='mx-10 font-bold hover:bg-(--LightGold) hover:text-black rounded-lg min-w-contain p-3 text-center '
+            className='mx-10 font-bold hover:bg-(--LightGold) hover:text-black transition-colors duration-300 relative group rounded-lg min-w-contain p-3 text-center '
           >
             Blog
           </Link>
           <div className='w-1/2 hidden md:flex lg:flex justify-end'>
-            <span className='flex hover:bg-(--LightGold) hover:text-black rounded-lg min-w-contain p-3 text-center cursor-pointer gap-2'>
+            <span className='flex hover:bg-(--LightGold) hover:text-black transition-colors duration-300 relative group rounded-lg min-w-contain p-3 text-center cursor-pointer gap-2'>
               <NotePencil size={32} />
-              Postagens
+              <Link to='/postagens'>Postagens</Link>
             </span>
 
-            <span className='flex hover:bg-(--LightGold) hover:text-black rounded-lg min-w-contain p-3 text-center cursor-pointer gap-2'>
+            <span className='flex hover:bg-(--LightGold) hover:text-black transition-colors duration-300 relative group rounded-lg min-w-contain p-3 text-center cursor-pointer gap-2'>
               <Tag size={32} />
               <Link to='/temas'>Temas</Link>
             </span>

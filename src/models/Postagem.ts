@@ -6,6 +6,7 @@ export default interface Postagem {
   titulo: string;
   texto: string;
   data: string;
+  foto_postagem: string;
   tema: Tema | null;
   usuario: Usuario | null;
 }
