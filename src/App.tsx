@@ -13,12 +13,14 @@ import FloatingLines from "./components/animated/floatingLines/FloatingLines";
 import ListaPostagens from "./components/postagem/listaPostagens/ListaPostagens";
 import Perfil from "./pages/perfil/homePerfil/Perfil";
 import FormPostagem from "./components/postagem/formPostagem/FormPostagem";
+import DeletarPostagem from "./components/postagem/deletarPostagem/DeletarPostagem";
 
 function App() {
   return (
     <>
       <AuthProvider>
         <ToastContainer />
+
         <div
           style={{
             width: "100%",
@@ -41,23 +43,29 @@ function App() {
           />
         </div>
         <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route>
-              <Route path='/' element={<Login />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/perfil' element={<Perfil />} />
-              <Route path='/home' element={<Home />} />
-              <Route path='/cadastro' element={<Cadastro />} />
-              <Route path='/temas' element={<ListaTemas />} />
-              <Route path='/postagens' element={<ListaPostagens />} />
-              <Route path='/novapostagem' element={<FormPostagem />} />
-              <Route path='/cadastrartema' element={<FormTema />} />
-              <Route path='/editartema/:id' element={<FormTema />} />
-              <Route path='/deletartema/:id' element={<DeletarTema />} />
-            </Route>
-          </Routes>
-          <Footer />
+          <div className='min-h-screen flex flex-col'>
+            <Navbar />
+            <main className="flex-1">
+              <Routes>
+                <Route>
+                  <Route path='/' element={<Login />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/perfil' element={<Perfil />} />
+                  <Route path='/home' element={<Home />} />
+                  <Route path='/cadastro' element={<Cadastro />} />
+                  <Route path='/temas' element={<ListaTemas />} />
+                  <Route path='/postagens' element={<ListaPostagens />} />
+                  <Route path='/novapostagem' element={<FormPostagem />} />
+                  <Route path='/postagens/:id' element={<DeletarPostagem />} />
+                  <Route path='/editarpostagem/:id' element={<FormPostagem />} />
+                  <Route path='/novotema' element={<FormTema />} />
+                  <Route path='/editartema/:id' element={<FormTema />} />
+                  <Route path='/temas/:id' element={<DeletarTema />} />
+                </Route>
+              </Routes>
+            </main>
+            <Footer />
+          </div>
         </BrowserRouter>
       </AuthProvider>
     </>

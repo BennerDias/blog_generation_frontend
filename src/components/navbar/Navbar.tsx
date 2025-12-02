@@ -35,21 +35,21 @@ function Navbar() {
   if (usuario.token !== "") {
     component = (
       <>
-      <div className='w-full h-20 flex justify-center py-4 bg-transparent text-(--Celadon)'>
+      <div className='w-full h-20 flex justify-center py-4 bg-transparent text-(--ElectricIndigo)'>
         <div className='container flex justify-between items-center text-xl '>
           <Link
             to='/'
-            className='mx-10 font-bold hover:bg-(--LightGold) hover:text-black transition-colors duration-300 relative group rounded-lg min-w-contain p-3 text-center '
+            className='mx-10 font-bold hover:bg-(--NeonViolet) hover:text-(--Cream) transition-colors duration-300 relative group rounded-lg min-w-contain p-3 text-center '
           >
             Blog
           </Link>
           <div className='w-1/2 hidden md:flex lg:flex justify-end'>
-            <span className='flex hover:bg-(--LightGold) hover:text-black transition-colors duration-300 relative group rounded-lg min-w-contain p-3 text-center cursor-pointer gap-2'>
+            <span className='flex hover:bg-(--NeonViolet) hover:text-(--Cream) transition-colors duration-300 relative group rounded-lg min-w-contain p-3 text-center cursor-pointer gap-2'>
               <NotePencil size={32} />
               <Link to='/postagens'>Postagens</Link>
             </span>
 
-            <span className='flex hover:bg-(--LightGold) hover:text-black transition-colors duration-300 relative group rounded-lg min-w-contain p-3 text-center cursor-pointer gap-2'>
+            <span className='flex hover:bg-(--NeonViolet) hover:text-(--Cream) transition-colors duration-300 relative group rounded-lg min-w-contain p-3 text-center cursor-pointer gap-2'>
               <Tag size={32} />
               <Link to='/temas'>Temas</Link>
             </span>
@@ -66,12 +66,12 @@ function Navbar() {
               setMenuMobileOpen((s) => !s);
             } }
           >
-            <svg className="w-6 h-6 text-(--Celadon)" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg className="w-6 h-6 text-(--ElectricIndigo)" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={menuMobileOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
             </svg>
           </button>
 
-          <div className="relative menu-foto flex flex-col items-center text-white ">
+          <div className="relative menu-foto flex flex-col items-center text-(--ElectricIndigo) ">
             <img
               onClick={(e) => {
                 e.stopPropagation();
@@ -84,7 +84,7 @@ function Navbar() {
 
             {menuAberto && (
               <div className="absolute top-16 right-0 bg-blue bg-opacity-95 border border-gray-600 rounded-xl shadow-2xl py-3 px-4 flex flex-col gap-2 w-44 animate-fadeIn ">
-                <Link to="/perfil" className="text-(--Celadon) hover:text-(--CanaryYellow) transition" onClick={() => setMenuAberto(false)}>
+                <Link to="/perfil" className="text-(--ElectricIndigo) hover:text-(--NeonViolet) transition" onClick={() => setMenuAberto(false)}>
                   Meu Perfil
                 </Link>
                 <button onClick={logout} className="flex gap-2 items-center text-red-400 hover:text-red-600 transition text-left">
@@ -98,35 +98,35 @@ function Navbar() {
       </div>
       
       <div className={`mobile-menu md:hidden ${menuMobileOpen ? "block" : "hidden"}`}>
-          <div className="px-6 pb-4 pt-2 border-t border-gray-700 bg-(--PitchBlack)">
+          <div className="px-6 pb-4 pt-2 border-t border-gray-700 bg-transparent shadow-2xl">
             <ul className="flex flex-col gap-3 list-none m-0 p-0">
               <li>
-                <Link to="/categorias" onClick={() => setMenuMobileOpen(false)} className="block text-(--Celadon) text-base font-medium hover:text-(--celadon) transition-colors duration-200">
+                <Link to="/categorias" onClick={() => setMenuMobileOpen(false)} className="block text-(--ElectricIndigo) text-base font-medium hover:text-(--NeonViolet) transition-colors duration-200">
                   Categorias
                 </Link>
               </li>
               <li>
-                <Link to="/servicos" onClick={() => setMenuMobileOpen(false)} className="block text-(--Celadon) text-base font-medium hover:text-(--celadon) transition-colors duration-200">
+                <Link to="/servicos" onClick={() => setMenuMobileOpen(false)} className="block text-(--ElectricIndigo) text-base font-medium hover:text-(--celadon) transition-colors duration-200">
                   Serviços
                 </Link>
               </li>
               <li>
-                <Link to="/sobre" onClick={() => setMenuMobileOpen(false)} className="block text-(--Celadon) text-base font-medium hover:text-(--celadon) transition-colors duration-200">
+                <Link to="/sobre" onClick={() => setMenuMobileOpen(false)} className="block text-(--ElectricIndigo) text-base font-medium hover:text-(--celadon) transition-colors duration-200">
                   Sobre
                 </Link>
               </li>
               <li>
-                <Link to="/contato" onClick={() => setMenuMobileOpen(false)} className="block text-(--Celadon) text-base font-medium hover:text-(--celadon) transition-colors duration-200">
+                <Link to="/contato" onClick={() => setMenuMobileOpen(false)} className="block text-(--ElectricIndigo) text-base font-medium hover:text-(--celadon) transition-colors duration-200">
                   Contato
                 </Link>
               </li>
               <li className="pt-2 border-t border-gray-700">
-                <Link to="/perfil" onClick={() => setMenuMobileOpen(false)} className="block text-(--Celadon) font-medium hover:text-(--celadon)">
+                <Link to="/perfil" onClick={() => setMenuMobileOpen(false)} className="block text-(--ElectricIndigo) font-medium hover:text-(--celadon)">
                   Meu Perfil
                 </Link>
               </li>
               <li>
-                <button onClick={logout} className="w-full text-left text-(--CanaryYellow) click:text-yellow-600 hover:text-yellow-600 transition py-2">Sair</button>
+                <button onClick={logout} className="w-full text-left text-(--HyperMagenta) click:text-(--NeonViolet) hover:text-yellow-600 transition py-2">Sair</button>
               </li>
             </ul>
           </div>

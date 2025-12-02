@@ -10,6 +10,7 @@ import { ClipLoader } from "react-spinners";
 import type Tema from "../../../models/Tema";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 function FormTema() {
   const navigate = useNavigate();
@@ -68,12 +69,12 @@ function FormTema() {
         await atualizar("/temas", tema, setTema, {
           headers: { Authorization: token }
         });
-        alert("O tema foi atualizado com sucesso");
+        ToastAlerta("O tema foi atualizado com sucesso", "sucesso");
       } catch (error: any) {
         if (error.toString().includes("401")) {
           handleLogout();
         } else {
-          alert("Erro ao atualizar o tema.");
+          ToastAlerta("Erro ao atualizar o tema.", "erro");
         }
       }
     } else {
@@ -81,12 +82,12 @@ function FormTema() {
         await cadastrar("/temas", tema, setTema, {
           headers: { Authorization: token }
         });
-        alert("O tema foi cadastrado com sucesso!");
+        ToastAlerta("O tema foi cadastrado com sucesso!", "sucesso");
       } catch (error: any) {
         if (error.toString().includes("401")) {
           handleLogout();
         } else {
-          alert("Erro ao cadastrar o tema.");
+          ToastAlerta("Erro ao cadastrar o tema.", "erro");
         }
       }
     }
@@ -95,12 +96,15 @@ function FormTema() {
   }
 
   return (
-    <div className='container flex flex-col items-center justify-center mx-auto'>
+    <div className='flex flex-col mx-auto items-center justify-center shadow-2xl w-4/5 min-h-180 text-(--Cream)'>
       <h1 className='text-4xl text-center my-8'>
         {id === undefined ? "Cadastrar Tema" : "Editar Tema"}
       </h1>
 
-      <form className='w-1/2 flex flex-col gap-4' onSubmit={gerarNovoTema}>
+      <form
+        className='w-1/2 flex flex-col gap-4 text-black'
+        onSubmit={gerarNovoTema}
+      >
         <div className='flex flex-col gap-2'>
           <label htmlFor='descricao'>Descrição do Tema</label>
           <input
@@ -114,7 +118,7 @@ function FormTema() {
         </div>
 
         <button
-          className='rounded text-slate-100 bg-indigo-400 hover:bg-indigo-800 w-1/2 py-2 mx-auto flex justify-center'
+          className='rounded disabled:bg-slate-200 bg-(--ElectricIndigo) hover:bg-(--NeonViolet) text-white font-bold w-1/2 mx-auto py-2 flex justify-center'
           type='submit'
         >
           {isLoading ? (

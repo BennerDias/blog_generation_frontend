@@ -66,9 +66,8 @@ function Cadastro() {
 
   return (
     <>
-      <div className='grid grid-cols-1 lg:grid-cols-2 h-screen place-items-center font-bold bg-(--PitchBlack) text-(--Celadon)'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 h-screen place-items-center font-bold bg-(--PitchBlack) text-(--LightGreen)'>
         <div className="bg-[url('https://ticoopbrasil.coop.br/wp-content/uploads/2024/10/O-Que-E-Programacao.jpg.webp')] lg:block hidden bg-no-repeat w-full min-h-screen bg-cover "></div>
-        
 
         <div className='flex flex-col items-center justify-around backdrop-blur-md shadow-[0_0_40px_rgba(255,255,255,0.08)] py-8 w-96 lg:w-120 min-h-130 rounded-2xl'>
           <form
@@ -88,7 +87,7 @@ function Cadastro() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   atualizarEstado(e)
                 }
-                className='border border-(--DustyOlive) rounded-md p-2'
+                className='border border-(--Cream) rounded-md p-2'
               />
             </div>
             <div className='flex flex-col w-full'>
@@ -102,7 +101,7 @@ function Cadastro() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   atualizarEstado(e)
                 }
-                className='border border-(--DustyOlive) rounded-md p-2'
+                className='border border-(--Cream) rounded-md p-2'
               />
             </div>
             <div className='flex flex-col w-full'>
@@ -116,7 +115,7 @@ function Cadastro() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   atualizarEstado(e)
                 }
-                className='border border-(--DustyOlive) rounded-md p-2'
+                className='border border-(--Cream) rounded-md p-2'
               />
             </div>
             <div className='flex flex-col w-full'>
@@ -130,7 +129,7 @@ function Cadastro() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   atualizarEstado(e)
                 }
-                className='border border-(--DustyOlive) rounded-md p-2'
+                className='border border-(--Cream) rounded-md p-2'
               />
             </div>
             <div className='flex flex-col w-full'>
@@ -144,13 +143,13 @@ function Cadastro() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleConfirmarSenha(e)
                 }
-                className='border border-(--DustyOlive) rounded-md p-2'
+                className='border border-(--Cream) rounded-md p-2'
               />
             </div>
             <div className='flex justify-around w-full gap-8'>
               <button
                 type='submit'
-                className='rounded bg-(--CanaryYellow) flex justify-center hover:bg-yellow-400 text-black w-full py-2 my-3'
+                className='rounded bg-(--ElectricIndigo) flex justify-center hover:bg-(--NeonViolet) text-(--Cream) w-full py-2 my-3'
               >
                 {isLoading ? (
                   <ClipLoader color='#ffffff' size={24} />
@@ -165,7 +164,7 @@ function Cadastro() {
                 <button
                   type='reset'
                   onClick={retornar}
-                  className=' text-(--CanaryYellow)  hover:underline'
+                  className=' text-(--ElectricIndigo) font-extrabold hover:text-(--NeonViolet)'
                 >
                   Faça login
                 </button>

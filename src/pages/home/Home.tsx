@@ -36,7 +36,7 @@ function Home() {
   }
   return (
     <>
-      <div className='bg-transparent text-(--Celadon) flex flex-col justify-center'>
+      <div className='bg-transparent text-(--Cream) flex flex-col justify-center'>
         <div className='flex flex-col gap-4 items-center justify-center p-10'>
           <TextType
             text={[
@@ -58,7 +58,7 @@ function Home() {
 
           <div className='flex justify-around gap-4'>
             <Link to='/Novapostagem'>
-              <button className='rounded-lg bg-(--CanaryYellow) flex justify-center items-center gap-4 hover:bg-yellow-400 text-black w-full py-2 px-10'>
+              <button className='rounded-lg bg-(--ElectricIndigo) flex justify-center items-center gap-4 hover:bg-(--NeonViolet) text-(--Cream) w-full py-2 px-10'>
                 <NotePencil size={20} />
                 Criar Postagem
               </button>
@@ -67,14 +67,12 @@ function Home() {
         </div>
 
         <div className='flex gap-8 px-5'>
-
           {postagens
-            .sort(() => Math.random() - 0.5) 
-            .slice(0, 3) 
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 3)
             .map((postagem) => (
               <CardPostagem key={postagem.id} postagem={postagem} />
             ))}
-            
         </div>
       </div>
     </>

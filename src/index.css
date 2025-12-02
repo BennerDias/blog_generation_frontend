@@ -3,10 +3,11 @@
   font-family: "Montserrat", sans-serif;
 }
 
-:root{
-  --PitchBlack: #0B0A07;
-  --Celadon: #BBCEA8;
-  --LightGold: #E3D87E;
-  --CanaryYellow: #F0EC57;
-  --DustyOlive: #748067;
+:root {
+  --InkBlack: #020314;
+  --ElectricIndigo: #5932e6;
+  --Cream: #F2F6D0;
+  --HyperMagenta: #b332e6;
+  --NeonViolet: #e032e6;
+  --LightGreen: #FFBE0B;
 }

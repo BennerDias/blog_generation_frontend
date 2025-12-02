@@ -40,8 +40,7 @@ function Login() {
   return (
     <>
       <div
-        className='flex flex-col h-screen place-items-center justify-center font-bold 
-      bg-[var(--PitchBlack)] text-(--Celadon)'
+        className='flex flex-col h-screen place-items-center justify-center font-bold text-(--Cream)'
       >
         <div className='w-full text-center my-8'>
           <h2 className='text-4xl font-Bold'>Bem-vindo de volta</h2>
@@ -67,7 +66,7 @@ function Login() {
                   atualizarEstado(e)
                 }
                 placeholder='Usuário'
-                className='border-b border-green-200 rounded-xl p-2'
+                className='border-b text-black border-gray-200 rounded-xl p-2'
               />
             </div>
             <div className='flex flex-col w-full'>
@@ -81,12 +80,12 @@ function Login() {
                   atualizarEstado(e)
                 }
                 placeholder='Password'
-                className='border-b border-green-200 rounded-xl p-2'
+                className='border-b text-black border-gray-200 rounded-xl p-2'
               />
             </div>
             <button
               type='submit'
-              className='rounded bg-(--CanaryYellow) flex justify-center hover:bg-yellow-400 text-black w-1/2 py-2'
+              className='rounded bg-(--ElectricIndigo) flex justify-center hover:bg-(--NeonViolet) text-(-Cream) w-1/2 py-2'
             >
               {isLoading ? (
                 <ClipLoader color='#ffffff' size={24} />
@@ -94,12 +93,12 @@ function Login() {
                 <span>Entrar</span>
               )}
             </button>
-            <hr className='border-green-200 w-full' />
+            <hr className='border-gray-200 w-full' />
             <p>
               Ainda não tem uma conta?{" "}
               <Link
                 to='/cadastro'
-                className='text-(--CanaryYellow) hover:underline'
+                className='text-(--InkBlack) font-extrabold hover:underline'
               >
                 Cadastre-se
               </Link>

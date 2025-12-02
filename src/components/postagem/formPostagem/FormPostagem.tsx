@@ -11,6 +11,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
 import type Postagem from "../../../models/Postagem";
 import { ClipLoader } from "react-spinners";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 function FormPostagem() {
   const navigate = useNavigate();
@@ -108,12 +109,12 @@ function FormPostagem() {
         await atualizar(`/postagens`, postagem, setPostagem, {
           headers: { Authorization: token }
         });
-        alert("Postagem atualizada com sucesso!");
+        ToastAlerta("Postagem atualizada com sucesso!", "sucesso");
       } catch (error: any) {
         if (error.toString().includes("401")) {
           handleLogout();
         } else {
-          alert("Erro ao atualizar postagem.");
+          ToastAlerta("Erro ao atualizar postagem.", "erro");
         }
       }
     } else {
@@ -121,12 +122,12 @@ function FormPostagem() {
         await cadastrar(`/postagens`, postagem, setPostagem, {
           headers: { Authorization: token }
         });
-        alert("A Postagem foi cadastrada com sucesso!");
+        ToastAlerta("A Postagem foi cadastrada com sucesso!", "sucesso");
       } catch (error: any) {
         if (error.toString().includes("401")) {
           handleLogout();
         } else {
-          alert("Erro ao cadastrar a Postagem.");
+          ToastAlerta("Erro ao cadastrar a Postagem.", "erro");
         }
       }
     }
@@ -139,13 +140,13 @@ function FormPostagem() {
 
   return (
     <>
-      <div className='container flex flex-col mx-auto items-center'>
-        <h1 className='text-4xl text-center my-8'>
+      <div className='flex flex-col mx-auto items-center justify-center shadow-2xl w-4/5 min-h-180 text-(--Cream)'>
+        <h1 className='text-4xl text-center my-8 '>
           {id !== undefined ? "Editar Postagem" : "Cadastrar Postagem"}
         </h1>
 
         <form
-          className='flex flex-col w-1/2 gap-4'
+          className='flex flex-col w-4/5 gap-4 text-black'
           onSubmit={gerarNovaPostagem}
         >
           <div className='flex flex-col gap-2'>
@@ -165,7 +166,7 @@ function FormPostagem() {
 
           <div className='flex flex-col gap-2'>
             <label htmlFor='texto'>Texto da Postagem</label>
-            <input
+            <textarea
               type='text'
               placeholder='Texto'
               name='texto'
@@ -174,7 +175,7 @@ function FormPostagem() {
                 atualizarEstado(e)
               }
               required
-              className='border-2 border-slate-700 rounded p-2'
+              className='border-2 border-slate-700 rounded p-2 bg-white'
             />
           </div>
           <div className='flex flex-col gap-2'>
@@ -214,7 +215,7 @@ function FormPostagem() {
 
           <button
             type='submit'
-            className='rounded disabled:bg-slate-200 bg-indigo-400 hover:bg-indigo-800 text-white font-bold w-1/2 mx-auto py-2 flex justify-center'
+            className='rounded disabled:bg-slate-200 bg-(--ElectricIndigo) hover:bg-(--NeonViolet) text-white font-bold w-1/2 mx-auto py-2 flex justify-center'
             disabled={carregandoTema}
           >
             {isLoading ? (
