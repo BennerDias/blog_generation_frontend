@@ -1,53 +1,158 @@
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState, type FormEvent } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import EditarPerfil from "../editarPerfil/EditarPerfil";
+import type Usuario from "../../../models/Usuario";
+import { atualizar } from "../../../services/Service";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 function Perfil() {
-  const navigate = useNavigate();
+  const { usuario, handleLogout } = useContext(AuthContext);
+  const token = usuario.token;
 
-  const { usuario } = useContext(AuthContext);
+  const [nome, setNome] = useState(usuario.nome);
+  const [foto, setFoto] = useState(usuario.foto);
+  const [email, setEmail] = useState(usuario.usuario);
+  const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-
-  }, [])
-
-  useEffect(() => {
-    if (usuario.token === "") {
-      alert("Você precisa estar logado");
-      navigate("/");
+  function checagemSenha(): boolean {
+    if (senha === "" && confirmarSenha === "") {
+      return true;
     }
-  }, [usuario.token]);
+
+    if (senha !== confirmarSenha) {
+      ToastAlerta(
+        "As senhas não são iguais. O campo senha e confirmar senha precisam ser iguais.",
+        "info"
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  async function atualizarPerfil(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!checagemSenha()) return;
+
+    const senhaFinal = senha === "" ? usuario.senha : senha;
+
+    const usuarioAtualizado: Usuario = {
+      ...usuario,
+      nome,
+      foto,
+      usuario: email,
+      senha: senhaFinal
+    };
+
+    try {
+      setIsLoading(true);
+
+      await atualizar(`/usuarios/atualizar`, usuarioAtualizado, setIsLoading, {
+        headers: {
+          Authorization: token
+        }
+      });
+
+      ToastAlerta("Perfil atualizado com sucesso!", "sucesso");
+    } catch (error: any) {
+      if (error.toString().includes("401")) {
+        ToastAlerta("Sessão expirada, faça login novamente.", "info");
+        handleLogout();
+      } else {
+        ToastAlerta("Erro ao atualizar o perfil.", "erro");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
-    <>
-      <div className='flex min-h-180'>
-        <div className='relative w-[300px] h-[420px] rounded-2xl overflow-hidden shadow-xl m-auto bg-gray-200'>
-          <img
-            src={usuario.foto}
-            className='absolute inset-0 w-full h-full object-cover'
-          />
-          <div className='absolute inset-0 from-black/50 via-black/0'></div>
-          <div className='relative flex flex-col items-center justify-start h-full p-4 text-white'>
-            <h2 className='text-xl font-semibold mt-4 drop-shadow'>
-              {usuario.nome}
-            </h2>
-            <p className='flex items-center gap-1 text-sm opacity-90 text-b'>
-              <span className='animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full'></span>
-              Conectando...
-            </p>
-            <div className='flex flex-col items-center justify-end gap-3 absolute bottom-4 left-0 right-0 px-4'>
-              <div className='flex items-center gap-3 bg-white/80 text-black rounded-xl px-4 py-2 backdrop-blur-md cursor-pointer'>
-                <img src={usuario.foto} className='w-8 h-8 rounded-full' />
-                <button className='font-medium text-sm' >Editar perfil</button>
+    <div className="flex justify-center items-center min-h-[100vh]')] bg-cover bg-center">
+      <div className='vf-container bg-[rgba(0,0,0,0.65)] backdrop-blur-md shadow-2xl rounded-3xl p-10 w-[90%] md:w-[500px] text-(--Cream) flex flex-col items-center gap-6'>
+        <h2 className='text-3xl font-semibold  mb-2'>Meu Perfil</h2>
 
-                {openEdit === true ? <EditarPerfil {...usuario}/> : openEdit === false}
-              </div>
-            </div>
-          </div>
+        <div className='relative '>
+          <img
+            src={
+              foto ||
+              "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png"
+            }
+            alt={nome}
+            className='w-28 h-28 rounded-full object-cover border-4 border-[var(--HyperMagenta)] shadow-lg'
+          />
         </div>
+
+        <form
+          onSubmit={atualizarPerfil}
+          className='w-full flex flex-col gap-5 text-left'
+        >
+          <div>
+            <label className='block mb-1 text-sm'>Nome</label>
+            <input
+              type='text'
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              className='w-full p-3 rounded-xl bg-[rgba(255,255,255,0.1)] border border-[var(--HyperMagenta)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--NeonViolet)]'
+            />
+          </div>
+
+          <div>
+            <label className='block mb-1 text-sm'>URL da foto</label>
+            <input
+              type='text'
+              value={
+                foto ||
+                "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png"
+              }
+              onChange={(e) => setFoto(e.target.value)}
+              className='w-full p-3 rounded-xl bg-[rgba(255,255,255,0.1)] border border-[var(--HyperMagenta)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--NeonViolet)]'
+            />
+          </div>
+
+          <div>
+            <label className='block mb-1 text-sm'>Usuário (email)</label>
+            <input
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className='w-full p-3 rounded-xl bg-[rgba(255,255,255,0.1)] border border-[var(--HyperMagenta)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--NeonViolet)]'
+            />
+          </div>
+
+          <div>
+            <label className='block mb-1 text-sm'>Nova Senha</label>
+            <input
+              type='password'
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              placeholder=''
+              className='w-full p-3 rounded-xl bg-[rgba(255,255,255,0.1)] border border-[var(--HyperMagenta)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--NeonViolet)]'
+            />
+          </div>
+
+          <div>
+            <label className='block mb-1 text-sm '>Confirme sua Senha</label>
+            <input
+              type='password'
+              value={confirmarSenha}
+              onChange={(e) => setConfirmarSenha(e.target.value)}
+              placeholder=''
+              className='w-full p-3 rounded-xl bg-[rgba(255,255,255,0.1)] border border-[var(--HyperMagenta)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--NeonViolet)]'
+            />
+          </div>
+
+          <button
+            type='submit'
+            disabled={isLoading}
+            className='mt-4 w-full py-3 rounded-xl font-semibold text-lg bg-[var(--HyperMagenta)] hover:bg-[var(--NeonViolet)] transition-colors duration-300 disabled:opacity-50'
+          >
+            {isLoading ? "Salvando..." : "Salvar alterações"}
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 }
 

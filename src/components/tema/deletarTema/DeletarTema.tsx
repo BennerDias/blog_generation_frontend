@@ -71,7 +71,7 @@ function DeletarTema() {
   }
   return (
     <div className='flex h-screen justify-center items-center text-black '>
-      <div className='relative z-10 flex flex-col w-96 lg:w-1/3 md:w-1/2 h-1/4 justify-center items-center bg-(--InkBlack)/60 bg-opacity-70 rounded-2xl shadow-2xl p-6 hover:bg-(--NeonViolet)/80 hover:scale-105 transition duration-300 text-(--Cream) hover:text-(--InkBlack)'>
+      <div className='relative z-10 flex flex-col w-96 lg:w-1/3 md:w-1/2 h-1/4 justify-center items-center bg-(--InkBlack)/60 bg-opacity-70 rounded-2xl shadow-2xl p-6 hover:scale-105 transition duration-300 text-(--Cream)'>
         <h2 className='text-4xl font-semibold text-center mb-4'>
           Tema {tema.descricao}
         </h2>
@@ -79,14 +79,14 @@ function DeletarTema() {
 
         <div className='flex gap-6 justify-center text-center'>
           <button
-            className='flex items-center justify-center w-auto p-3 mt-4 bg-(--ElectricIndigo) hover:bg-(--Cream) hover:text-[#2c302e] rounded-xl font-semibold transition-all duration-300'
+            className='flex items-center justify-center w-auto p-3 mt-4 bg-red-500 hover:bg-red-800 rounded-xl font-semibold transition-all duration-300'
             onClick={() => setShowModal(true)}
           >
             Deletar
           </button>
 
           <button
-            className='flex items-center justify-center w-auto p-3 mt-4 hover:bg-(--LightGreen) rounded-xl font-semibold transition-all duration-300'
+            className='flex items-center justify-center w-auto p-3 mt-4 bg-(--ElectricIndigo) hover:bg-(--Cream) hover:text-[#2c302e] rounded-xl font-semibold transition-all duration-300'
             onClick={retornar}
           >
             Cancelar

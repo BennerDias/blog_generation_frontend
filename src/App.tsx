@@ -13,7 +13,6 @@ import FloatingLines from "./components/animated/floatingLines/FloatingLines";
 import ListaPostagens from "./components/postagem/listaPostagens/ListaPostagens";
 import Perfil from "./pages/perfil/homePerfil/Perfil";
 import FormPostagem from "./components/postagem/formPostagem/FormPostagem";
-import DeletarPostagem from "./components/postagem/deletarPostagem/DeletarPostagem";
 
 function App() {
   return (
@@ -56,7 +55,6 @@ function App() {
                   <Route path='/temas' element={<ListaTemas />} />
                   <Route path='/postagens' element={<ListaPostagens />} />
                   <Route path='/novapostagem' element={<FormPostagem />} />
-                  <Route path='/postagens/:id' element={<DeletarPostagem />} />
                   <Route path='/editarpostagem/:id' element={<FormPostagem />} />
                   <Route path='/novotema' element={<FormTema />} />
                   <Route path='/editartema/:id' element={<FormTema />} />

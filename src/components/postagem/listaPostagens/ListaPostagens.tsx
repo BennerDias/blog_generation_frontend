@@ -3,8 +3,10 @@ import CardPostagem from "../cardPostagem/CardPostagem";
 import { useContext, useEffect, useState } from "react";
 import type Postagem from "../../../models/Postagem";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { buscar } from "../../../services/Service";
+import { buscar, deletar } from "../../../services/Service";
 import { SyncLoader } from "react-spinners";
+import DeleteModal from "../deleteModal/DeleteModal";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 function ListaPostagens() {
   const navigate = useNavigate();
@@ -14,7 +16,19 @@ function ListaPostagens() {
   const { usuario, handleLogout } = useContext(AuthContext);
 
   const [postagens, setPostagens] = useState<Postagem[]>([]);
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [postagemId, setPostagemId] = useState<number>(0);
+
+  const [postSelecionada, setPostSelecionada] = useState<Postagem | null>(null);
   const token = usuario.token;
+
+  function abrirModal(postagem: Postagem) {
+    setPostSelecionada(postagem);
+    setPostagemId(postagem.id!);
+    setModalOpen(true);
+  }
 
   useEffect(() => {
     if (token === "") {
@@ -43,6 +57,30 @@ function ListaPostagens() {
     }
   }
 
+  async function deletarPostagem() {
+    setIsLoading(true);
+
+    try {
+      await deletar(`/postagens/${postagemId}`, {
+        headers: {
+          Authorization: token
+        }
+      });
+
+      ToastAlerta("Postagem apagada com sucesso", "sucesso");
+    } catch (error: any) {
+      if (error.toString().includes("401")) {
+        handleLogout();
+      } else {
+        ToastAlerta("Erro ao deletar a postagem.", "erro");
+      }
+    }
+
+    setModalOpen(false);
+    buscarPostagens();
+    setIsLoading(false);
+  }
+
   return (
     <>
       {isLoading && (
@@ -64,9 +102,21 @@ function ListaPostagens() {
                                     lg:grid-cols-3 gap-8'
           >
             {postagens.map((postagem) => (
-              <CardPostagem key={postagem.id} postagem={postagem} />
+              <CardPostagem
+                key={postagem.id}
+                postagem={postagem}
+                onDeleteClick={() => abrirModal(postagem)}
+              />
             ))}
           </div>
+
+          <DeleteModal
+            isOpen={modalOpen}
+            onClose={() => setModalOpen(false)}
+            onConfirm={() => deletarPostagem()}
+            title='Confirmar Exclusão'
+            message={`Tem certeza que deseja excluir a postagem "${postSelecionada?.titulo}"?`}
+          />
         </div>
       </div>
     </>
