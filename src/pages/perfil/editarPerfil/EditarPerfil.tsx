@@ -1,13 +1,22 @@
 import { useState } from "react";
 
-export default function EditarPerfil({ usuario }) {
+type Usuario = {
+  nome: string;
+  foto: string;
+};
+
+type EditarPerfilProps = {
+  usuario: Usuario;
+};
+
+export default function EditarPerfil({ usuario }: EditarPerfilProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState({
     nome: usuario.nome,
     foto: usuario.foto
   });
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm({
       ...form,
       [e.target.name]: e.target.value

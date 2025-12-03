@@ -19,6 +19,7 @@
     "react-router-dom": "^7.9.4",
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
+    "reactjs-popup": "^2.0.6",
     "tailwindcss": "^4.1.16",
     "three": "^0.181.2"
   },

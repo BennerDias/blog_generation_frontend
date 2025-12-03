@@ -5,9 +5,11 @@ import { useContext, useEffect, useState } from "react";
 import type Postagem from "../../models/Postagem";
 import { buscar } from "../../services/Service";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { SyncLoader } from "react-spinners";
 
 function Home() {
+  const navigate = useNavigate();
   const [postagens, setPostagens] = useState<Postagem[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,6 +36,11 @@ function Home() {
       setIsLoading(false);
     }
   }
+
+  function navegar() {
+    navigate("/postagens");
+  }
+
   return (
     <>
       <div className='bg-transparent text-(--Cream) flex flex-col justify-center'>
@@ -66,12 +73,22 @@ function Home() {
           </div>
         </div>
 
+        {isLoading && (
+          <div className='flex justify-center w-full my-8'>
+            <SyncLoader color='#312e81' size={32} />
+          </div>
+        )}
+
         <div className='flex gap-8 px-5'>
           {postagens
             .sort(() => Math.random() - 0.5)
             .slice(0, 3)
             .map((postagem) => (
-              <CardPostagem key={postagem.id} postagem={postagem} />
+              <CardPostagem
+                key={postagem.id}
+                postagem={postagem}
+                onDeleteClick={() => navegar()}
+              />
             ))}
         </div>
       </div>

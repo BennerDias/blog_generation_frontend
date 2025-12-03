@@ -87,7 +87,7 @@ function FormPostagem() {
     });
   }, [tema]);
 
-  function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+  function atualizarEstado(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setPostagem({
       ...postagem,
       [e.target.name]: e.target.value,
@@ -100,7 +100,7 @@ function FormPostagem() {
     navigate("/postagens");
   }
 
-  async function gerarNovaPostagem(e: FormEvent<HTMLInputElement>) {
+  async function gerarNovaPostagem(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
 
@@ -156,7 +156,7 @@ function FormPostagem() {
               placeholder='Título'
               name='titulo'
               value={postagem.titulo}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
                 atualizarEstado(e)
               }
               required
@@ -167,11 +167,10 @@ function FormPostagem() {
           <div className='flex flex-col gap-2'>
             <label htmlFor='texto'>Texto da Postagem</label>
             <textarea
-              type='text'
               placeholder='Texto'
               name='texto'
               value={postagem.texto}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
                 atualizarEstado(e)
               }
               required

@@ -17,11 +17,11 @@ function ListaPostagens() {
 
   const [postagens, setPostagens] = useState<Postagem[]>([]);
 
+  const [postSelecionada, setPostSelecionada] = useState<Postagem | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   const [postagemId, setPostagemId] = useState<number>(0);
 
-  const [postSelecionada, setPostSelecionada] = useState<Postagem | null>(null);
   const token = usuario.token;
 
   function abrirModal(postagem: Postagem) {

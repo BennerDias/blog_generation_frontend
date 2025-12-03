@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { ClipLoader } from "react-spinners";
-
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -18,8 +15,6 @@ function DeleteModal({
 }: ModalProps) {
   if (!isOpen) return null;
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
   return (
     <>
       <div className='fixed inset-0 bg-opacity-70 backdrop-blur-sm flex justify-center items-center z-50'>
@@ -32,11 +27,7 @@ function DeleteModal({
               onClick={onConfirm}
               className='flex items-center justify-center w-auto p-3 mt-4 bg-red-500 hover:bg-red-800 rounded-xl font-semibold transition-all duration-300'
             >
-              {isLoading ? (
-                <ClipLoader color='#fff' size={20} />
-              ) : (
-                "Sim, deletar"
-              )}
+              Sim, deletar
             </button>
 
             <button
