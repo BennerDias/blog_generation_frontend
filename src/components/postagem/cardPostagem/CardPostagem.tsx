@@ -10,7 +10,7 @@ interface CardPostagensProps {
 function CardPostagem({ postagem, onDeleteClick }: CardPostagensProps) {
   return (
     <>
-      <div className='flex min-h-full min-w-96 flex-col overflow-hidden rounded-3xl border bg-neutral-900 border-gray-500 text-(--Cream)'>
+      <div className='flex min-h-full min-w-96 flex-col overflow-hidden justify-between rounded-3xl border bg-neutral-900 border-gray-500 text-(--Cream)'>
         <div className='w-full h-80 overflow-hidden'>
           <img
             className='h-full w-full object-cover'
@@ -22,13 +22,18 @@ function CardPostagem({ postagem, onDeleteClick }: CardPostagensProps) {
           />
         </div>
 
-        <div className='-mt-6 min-h-50 rounded-t-3xl flex flex-col justify-between  bg-neutral-900 p-5'>
+        <div className='-mt-6 min-h-80 rounded-t-3xl flex flex-col justify-between bg-neutral-900 p-5'>
           <h4 className='text-md'>{postagem.tema?.descricao}</h4>
           <h2 className='text-xl font-bold'>{postagem.titulo}</h2>
           <p className='text-sm text-gray-400'>
-            {postagem.texto.length < 500
-              ? postagem.texto
-              : postagem.texto + " Leia mais"}
+            {postagem.texto.length < 500 ? (
+              postagem.texto
+            ) : (
+              <>
+                {postagem.texto}{" "}
+                <span className='text-blue-400 cursor-pointer'> Leia mais</span>
+              </>
+            )}
           </p>
 
           <div className='flex items-end gap-3 mt-5'>
